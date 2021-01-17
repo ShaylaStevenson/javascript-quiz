@@ -75,7 +75,7 @@ function get(x) {
 function displayQuestion() {
     testEl = get("testEl");
     if (progress >= possibleQuestions.length) {
-        testEl.innerHTML = "<h2>You answered " + correct + " out of" + possibleQuestions.length + " questions correctly.<h2>";
+        testEl.innerHTML = "<h2>You answered " + correct + " out of " + possibleQuestions.length + " questions correctly.<h2>";
         get("progressEl").innerHTML = "You have completed the quiz.";
         //reset variables to reset quiz
         progress = 0;
@@ -85,7 +85,7 @@ function displayQuestion() {
     }
 
     //displays progress of quiz in progressEl
-    get("progressEl").innerHTML = "Question " + progress+1 + " of" + possibleQuestions.length;
+    get("progressEl").innerHTML = "Question " + (progress+1) + " of " + possibleQuestions.length;
 
     //"assign" keys from questins in possible questions array to variables, which can be reused
     question = possibleQuestions[progress].question;
@@ -104,5 +104,34 @@ function displayQuestion() {
 
     //show submit button when answer is selected
     testEl.innerHTML += "<button onclick='checkAnswer()'>Submit Answer</button>";
-    
 }
+
+//function to check answers
+function checkAnswer() {
+    choices = document.getElementsByName("choices");
+    
+    //loop through choices and stops at checked choice
+    for (var i = 0; i < choices.length; i++) {
+        if (choices[i].checked) {
+            userChoice = choices[i].value;
+        }
+    }
+    //check if userChoice matches answer key stored in array
+    if (userChoice == possibleQuestions[progress].answer) {
+        correct++;
+    }
+    //increases progress and displays next question
+    progress++;
+    displayQuestion();
+}
+
+//add event listener to load quiz when page opens
+//??recreate so that quiz starts when button clicked??
+window.addEventListener("load", displayQuestion);
+
+//collect users initials for score board
+//in html create scorebard
+//add restart button
+//add timer that starts onclick of begin button
+//end game when timer = 0
+//deduct time when wrong answer input
