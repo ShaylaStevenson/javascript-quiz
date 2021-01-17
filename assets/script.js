@@ -17,10 +17,10 @@ var progress = 0;
 var correct = 0;
 
 //variable to contain the "test" <div>
-var test;
+var testEl;
 
 //variable to contain the header that displays progress
-var progressBar;
+var progressEl;
 
 //variable to contain a question grabbed from an array
 var question;
@@ -65,3 +65,44 @@ var possibleQuestions = [
         answer: "C",
     }
 ];
+
+//get() to reduce keystrokes
+function get(x) {
+    return document.getElementById(x);
+}
+
+//function to display a question on the screen
+function displayQuestion() {
+    testEl = get("testEl");
+    if (progress >= possibleQuestions.length) {
+        testEl.innerHTML = "<h2>You answered " + correct + " out of" + possibleQuestions.length + " questions correctly.<h2>";
+        get("progressEl").innerHTML = "You have completed the quiz.";
+        //reset variables to reset quiz
+        progress = 0;
+        correct = 0;
+        //stops function
+        return false;
+    }
+
+    //displays progress of quiz in progressEl
+    get("progressEl").innerHTML = "Question " + progress+1 + " of" + possibleQuestions.length;
+
+    //"assign" keys from questins in possible questions array to variables, which can be reused
+    question = possibleQuestions[progress].question;
+    chA = possibleQuestions[progress].a;
+    chB = possibleQuestions[progress].b;
+    chC = possibleQuestions[progress].c;
+
+    //display the question
+    testEl.innerHTML = "<h3>" + question + "</h3>";
+
+    //display the multiple-choices
+    //??recreate by hooking to elemnets instead of creating in JS?
+    testEl.innerHTML += "<label><input type='radio' name='choices' value='A'>" + chA + "</label><br>";
+    testEl.innerHTML += "<label><input type='radio' name='choices' value='A'>" + chB + "</label><br>";
+    testEl.innerHTML += "<label><input type='radio' name='choices' value='A'>" + chC + "</label><br>";
+
+    //show submit button when answer is selected
+    testEl.innerHTML += "<button onclick='checkAnswer()'>Submit Answer</button>";
+    
+}
