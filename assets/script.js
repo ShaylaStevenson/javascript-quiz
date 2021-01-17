@@ -35,4 +35,33 @@ var choices;
 var chA, chB, chC;
 
 //Arrays within larger array, where questions with answers are stored
- 
+var possibleQuestions = [
+    {
+        question: "I am a question?",
+        a: "I am a pickle.",
+        b: "I am a Rick.",
+        c: "I am am Morty.",
+        answer: "B"
+    },
+    {
+        question: "Hey, I'm a question, too!?",
+        a: "I am a burrito",
+        b: "I am a taco",
+        c: "I am Zorro",
+        answer: "C",
+    },
+    {
+        question: "I am a question?",
+        a: "I am a pickle.",
+        b: "I am a Rick.",
+        c: "I am am Morty.",
+        answer: "B"
+    },
+    {
+        question: "Hey, I'm a question, too!?",
+        a: "I am a burrito",
+        b: "I am a taco",
+        c: "I am Zorro",
+        answer: "C",
+    }
+];
