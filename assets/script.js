@@ -31,7 +31,10 @@ $(document).ready(function() {
     var progressBarEl;
 
     //variable to display the seconds left for quiz
-    var timerEl;
+    var timerEl = document.getElementById("timerEl");
+
+    var interval;
+    
 
     //variable to display highscores with initials
     var scoreboardEl;
@@ -87,19 +90,21 @@ $(document).ready(function() {
         }
     ];
 
-    //on whether a checkbox has been ticked or not.
-    //function confirmAnswer(){
-    //    //If the checkbox has been checked
-    //    if(chA.checked || chB.checked || chC.checked){
-    //        //Set the disabled property to FALSE and enable the button.
-    //        document.get("submitAnswerBtn").disabled = false;
-    //        submitAnswerBtn.addEventListener("click", checkAnswer);
-    //    } else{
-    //        //Otherwise, disable the submit button.
-    //        document.get("submitAnswerBtn").disabled = true;
-    //    }
-
-
+    function startTimer() {     
+            var seconds = 10;
+            interval = setInterval(function() {
+            document.getElementById('timerEl').innerHTML = "Seconds remaining: " + seconds;
+            seconds--;
+            if (seconds <= 0) {
+                clearInterval(interval);
+                timerEl.innerHTML = "Seconds remaining: 0";
+                get("progressEl").innerHTML = "Time is up!";
+                testEl.innerHTML = "<h2>You answered " + correct + " out of " + possibleQuestions.length + " questions correctly.<h2>";
+            }
+        }, 
+        1000);    
+    }
+    
 
     //get() to reduce keystrokes
     //Don't move! Will stop working!
@@ -107,13 +112,15 @@ $(document).ready(function() {
         return document.getElementById(x);
     }
 
-    
     //function to display a question on the screen
     function displayQuestion() {
+        
         testEl = get("testEl");
         if (progress >= possibleQuestions.length) {
             testEl.innerHTML = "<h2>You answered " + correct + " out of " + possibleQuestions.length + " questions correctly.<h2>";
-            get("progressEl").innerHTML = "You have completed the quiz.";
+            get("progressEl").innerHTML = "You have completed the quiz!";
+            //stop timer but display remaining seconds
+            clearInterval(interval);
             //reset variables to reset quiz
             progress = 0;
             correct = 0;
@@ -138,7 +145,7 @@ $(document).ready(function() {
         testEl.innerHTML += "<label><input type='radio' name='choices' value='A'>" + chA + "</label><br>";
         testEl.innerHTML += "<label><input type='radio' name='choices' value='B'>" + chB + "</label><br>";
         testEl.innerHTML += "<label><input type='radio' name='choices' value='C'>" + chC + "</label><br>";
-       
+    
         //confirmAnswer();
 
         //submit button when answer is selected which will render checkAnswer function
@@ -153,6 +160,7 @@ $(document).ready(function() {
         for (var i = 0; i < choices.length; i++) {
             if (choices[i].checked) {
                 userChoice = choices[i].value;
+                
             }
         }
         //check if userChoice matches answer key stored in array
@@ -163,14 +171,9 @@ $(document).ready(function() {
         progress++;
         displayQuestion();
     }
-
-//add event listener to load quiz when page opens
-//??recreate so that quiz starts when button clicked??
-//startQuizBtn.addEventListener("click", displayQuestion);
-//startQuizBtn.addEventListener("click", runQuiz);
-
-  
+//when start button clicked, questions will begin  
 startQuizBtn.addEventListener("click", displayQuestion);
+startQuizBtn.addEventListener("click", startTimer);
 });
 
 //collect users initials for score board
