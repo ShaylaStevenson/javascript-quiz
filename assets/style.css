@@ -4,3 +4,27 @@ div#testEl{
     background-color:#E5FCE3;
     width:50%;
 }
+
+#timerEl {
+    color:red;
+}
+
+#submitAnswerBtn {
+    visibility: hidden;
+    background-color: #5AB029;
+}
+
+#startQuizBtn {
+    visibility: visible;
+    background-color: #5AB029;
+}
+
+#resetBtn {
+    visibility: hidden;
+    background-color: #5AB029;
+
+}
+
+button {
+ margin:8px
+}

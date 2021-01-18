@@ -19,31 +19,40 @@ $(document).ready(function() {
     
 
     //variable to contain start quiz button
-    var startQuizBtn = document.getElementById("startQuizBtn");
+    var startQuizBtn = get("startQuizBtn");
+
+    //variable to contain reset button
+    var resetBtn = get("resetBtn");
 
     //variable to contain the "test" <div>
-    var testEl;
+    var testEl = get("testEl");
+
+    var submitAnswerBtn = get("submitAnswerBtn");
 
     //variable to contain the header that displays progress numerically
-    var progressEl;
+    var progressEl = get("progressEl");
 
     //variable to contain visual representation of progress of quiz via a bar
-    var progressBarEl;
-
-    //variable to display the seconds left for quiz
-    var timerEl = document.getElementById("timerEl");
-
-    var interval;
-    
+    var progressBarEl = get("progressBarEl");
 
     //variable to display highscores with initials
-    var scoreboardEl;
+    var scoreboardEl = get("scoreboardEl");
+
+    //variable to display the seconds left for quiz
+    var timerEl = get("timerEl");
+
+    //variable to set how long user has for test
+    //var seconds;
+    
+    //variable containing countdown interval
+    //var interval;
 
     //variable to record the progress of the quiz ex : Q3 of 4
     var progress = 0;
 
     //variable to record how many correct answers user has
     var correct = 0;
+    var score = 0;
 
     //variable to contain a question grabbed from an array
     var question;
@@ -57,7 +66,6 @@ $(document).ready(function() {
     //variables to contain each possible answer
     var chA, chB, chC;
 
-    
     //Arrays within larger array, where questions with answers are stored
     var possibleQuestions = [
         {
@@ -90,46 +98,75 @@ $(document).ready(function() {
         }
     ];
 
-    function startTimer() {     
-            var seconds = 10;
-            interval = setInterval(function() {
-            document.getElementById('timerEl').innerHTML = "Seconds remaining: " + seconds;
-            seconds--;
-            if (seconds <= 0) {
-                clearInterval(interval);
-                timerEl.innerHTML = "Seconds remaining: 0";
-                get("progressEl").innerHTML = "Time is up!";
-                testEl.innerHTML = "<h2>You answered " + correct + " out of " + possibleQuestions.length + " questions correctly.<h2>";
-            }
-        }, 
-        1000);    
-    }
-    
-
-    //get() to reduce keystrokes
-    //Don't move! Will stop working!
+    //get() to reduce keystrokes.
     function get(x) {
         return document.getElementById(x);
     }
 
-    //function to display a question on the screen
+    //functions to show/hide buttons
+    function showSubmitBtn() {
+        submitAnswerBtn.style.visibility = "visible";
+    }
+    function hideSubmitBtn() {
+        submitAnswerBtn.style.visibility = "hidden";
+    }
+    function showStartQuizBtn() {
+        startQuizBtn.style.visibility = "visible";
+    }
+    function hideStartQuizBtn() {
+        startQuizBtn.style.display = "none";
+    }
+    function showResetBtn() {
+        resetBtn.style.visibility = "visible";
+    }
+    function hideResetBtn() {
+        resetBtn.style.visibility = "hidden";
+    }
+
+    //function to control timer seconds and messages
+    function startTimer() {     
+            seconds = 45;
+            interval = setInterval(function() {
+            timerEl.innerHTML = "Seconds remaining: " + seconds;
+            seconds--;
+            //if seconds reaches zero, display message and score and render functions
+            if (seconds <= 0) {
+                progressEl.innerHTML = "Time is up!";
+                testEl.innerHTML = "<h2>You answered " + correct + " out of " + possibleQuestions.length + " questions correctly.<h2>";
+                hideStartQuizBtn();
+                showResetBtn();
+                hideSubmitBtn();
+                calcScore(); 
+                clearInterval(interval);
+                timerEl.innerHTML = "";
+                //progress = 0;
+                //correct = 0;
+            }
+        }, 
+        1000);    
+    }
+
+    //function to display a question on the screen and get user answer
     function displayQuestion() {
-        
-        testEl = get("testEl");
+        hideStartQuizBtn();
+        //if all questions are answered, display message and score and render functions
         if (progress >= possibleQuestions.length) {
             testEl.innerHTML = "<h2>You answered " + correct + " out of " + possibleQuestions.length + " questions correctly.<h2>";
-            get("progressEl").innerHTML = "You have completed the quiz!";
-            //stop timer but display remaining seconds
+            progressEl.innerHTML = "You have completed the quiz!";
+            hideSubmitBtn();
+            hideStartQuizBtn();
+            showResetBtn();
+            calcScore(); 
             clearInterval(interval);
-            //reset variables to reset quiz
-            progress = 0;
-            correct = 0;
-            //stops function
+            timerEl.innerHTML = "";
             return false;
+             //progress = 0;
+            //correct = 0;
+            //stops function
         }
 
         //displays progress of quiz in progressEl
-        get("progressEl").innerHTML = "Question " + (progress+1) + " of " + possibleQuestions.length;
+        progressEl.innerHTML = "Question " + (progress+1) + " of " + possibleQuestions.length;
 
         //"assign" keys from questions in possible questions array to variables, which can be reused
         question = possibleQuestions[progress].question;
@@ -141,12 +178,10 @@ $(document).ready(function() {
         testEl.innerHTML = "<h3>" + question + "</h3>";
 
         //display the multiple-choices
-        //??recreate by hooking to elemnets instead of creating in JS?
         testEl.innerHTML += "<label><input type='radio' name='choices' value='A'>" + chA + "</label><br>";
         testEl.innerHTML += "<label><input type='radio' name='choices' value='B'>" + chB + "</label><br>";
         testEl.innerHTML += "<label><input type='radio' name='choices' value='C'>" + chC + "</label><br>";
-    
-        //confirmAnswer();
+        
 
         //submit button when answer is selected which will render checkAnswer function
         submitAnswerBtn.addEventListener("click", checkAnswer);
@@ -160,20 +195,37 @@ $(document).ready(function() {
         for (var i = 0; i < choices.length; i++) {
             if (choices[i].checked) {
                 userChoice = choices[i].value;
-                
             }
         }
         //check if userChoice matches answer key stored in array
+        //if correct, increment correct variable
         if (userChoice == possibleQuestions[progress].answer) {
             correct++;
+        //if false, decremant 5 seconds from timer
+        } else {
+            seconds -= 5;
         }
         //increases progress and displays next question
         progress++;
         displayQuestion();
     }
-//when start button clicked, questions will begin  
+
+    //function to calculate score
+    function calcScore() {
+        score = (correct / possibleQuestions.length)*100;
+        scoreboardEl.innerHTML = "Your score is: " + score + "%"
+    }
+
+    function resetQuiz() {
+        //scoreboardEl.innerHTML = "";
+        window.location.reload();
+    }
+
+//when start button clicked, questions and timer will begin  
 startQuizBtn.addEventListener("click", displayQuestion);
 startQuizBtn.addEventListener("click", startTimer);
+startQuizBtn.addEventListener("click", showSubmitBtn);
+resetBtn.addEventListener("click", resetQuiz);
 });
 
 //collect users initials for score board
