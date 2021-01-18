@@ -28,3 +28,7 @@ div#testEl{
 button {
  margin:8px
 }
+
+#scoreboardEl {
+    visibility: hidden;
+}

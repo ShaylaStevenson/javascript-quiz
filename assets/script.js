@@ -26,6 +26,7 @@ $(document).ready(function() {
 
     //variable to contain the "test" <div>
     var testEl = get("testEl");
+    testEl.innerHTML = "<h1>JavaScript Quiz</h1>"
 
     var submitAnswerBtn = get("submitAnswerBtn");
 
@@ -52,7 +53,8 @@ $(document).ready(function() {
 
     //variable to record how many correct answers user has
     var correct = 0;
-    var score = 0;
+
+    //var score = 0;
 
     //variable to contain a question grabbed from an array
     var question;
@@ -212,8 +214,14 @@ $(document).ready(function() {
 
     //function to calculate score
     function calcScore() {
+        scoreboardEl.style.visibility = "visible";
         score = (correct / possibleQuestions.length)*100;
-        scoreboardEl.innerHTML = "Your score is: " + score + "%"
+        scoreboardEl.innerHTML += "\nYour score is: " + score + "%"
+        localStorage.setItem("score", score);
+    }
+
+    function getInitials() {
+        
     }
 
     function resetQuiz() {
