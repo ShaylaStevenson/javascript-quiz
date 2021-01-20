@@ -13,6 +13,7 @@
 
 
 
+
 //Function to prevent JS running until DOM loaded fully
 $(document).ready(function() {
 
@@ -38,6 +39,16 @@ $(document).ready(function() {
 
     //variable to display highscores with initials
     var scoreboardEl = get("scoreboardEl");
+    var score = 0;
+
+    //variable to contain user's initials
+    var userInitials = get("userInitials");
+
+    //variable to contain the value of initials to be stored
+    var initialsValue;
+
+    //variable to contain the submit highscore button
+    var getInitialsBtn = get("getInitialsBtn");
 
     //variable to display the seconds left for quiz
     var timerEl = get("timerEl");
@@ -54,7 +65,6 @@ $(document).ready(function() {
     //variable to record how many correct answers user has
     var correct = 0;
 
-    //var score = 0;
 
     //variable to contain a question grabbed from an array
     var question;
@@ -145,7 +155,7 @@ $(document).ready(function() {
                 //correct = 0;
             }
         }, 
-        1000);    
+        1000);
     }
 
     //function to display a question on the screen and get user answer
@@ -210,20 +220,35 @@ $(document).ready(function() {
         //increases progress and displays next question
         progress++;
         displayQuestion();
+        console.log(correct);
+        return correct;
     }
+    
 
     //function to calculate score
     function calcScore() {
         scoreboardEl.style.visibility = "visible";
-        score = (correct / possibleQuestions.length)*100;
+        var perValue = (correct / possibleQuestions.length)*100;
+        score = perValue.valueOf()
         scoreboardEl.innerHTML += "\nYour score is: " + score + "%"
-        localStorage.setItem("score", score);
+        console.log(score);
+        //localStorage.setItem("score", score);
+        return score;
     }
+    
 
     function getInitials() {
         
+        initialsValue = userInitials.value;
+        //localStorage.setItem("initials", initialsValue);
+        console.log(initialsValue);
+        return initialsValue;
+        
     }
+    
 
+    
+    
     function resetQuiz() {
         //scoreboardEl.innerHTML = "";
         window.location.reload();
@@ -234,6 +259,7 @@ startQuizBtn.addEventListener("click", displayQuestion);
 startQuizBtn.addEventListener("click", startTimer);
 startQuizBtn.addEventListener("click", showSubmitBtn);
 resetBtn.addEventListener("click", resetQuiz);
+getInitialsBtn.addEventListener("click", getInitials);
 });
 
 //collect users initials for score board
