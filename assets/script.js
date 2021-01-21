@@ -63,33 +63,47 @@ $(document).ready(function() {
     //Arrays within larger array, where questions with answers are stored
     var possibleQuestions = [
         {
-            question: "I am a question?",
-            a: "I am a pickle.",
-            b: "I am a Rick.",
-            c: "I am am Morty.",
-            answer: "B"
+            question: "Which event occurs when the user clicks on an HTML element?",
+            a: "go-go",
+            b: "onclick",
+            c: "onMouseClick",
+            answer: "B",
         },
         {
-            question: "Hey, I'm a question, too!?",
-            a: "I am a burrito",
-            b: "I am a taco",
-            c: "I am Zorro",
+            question: "How do you write 'Hi JavaScript' in an alert box?",
+            a: "msgBox('Hi JavaScript')",
+            b: "comment('Hi JavaScript')",
+            c: "alert('Hi JavaScript')",
             answer: "C",
         },
         {
-            question: "I am a question?",
-            a: "I am a pickle.",
-            b: "I am a Rick.",
-            c: "I am am Morty.",
-            answer: "B"
+            question: "How do you call a function named 'funFunction'?",
+            a: "call: funFunction",
+            b: "funFunction()",
+            c: "run('funFunction')",
+            answer: "B",
         },
         {
-            question: "Hey, I'm a question, too!?",
-            a: "I am a burrito",
-            b: "I am a taco",
-            c: "I am Zorro",
+            question: "How can you add a comment in a JavaScript file?",
+            a: "//comment",
+            b: "<!--comment-->",
+            c: "/**comment",
+            answer: "A",
+        },
+        {
+            question: "What is the correct way to write a JavaScript array?",
+            a: "var drinks = ['coffee', 'soda', 'water']",
+            b: "array drinks = 'coffee', 'soda', 'water'",
+            c: "coffee, soda, water = drinks",
+            answer: "A",
+        },
+        {
+            question: "How do you find the number with the highest value of x and y?",
+            a: "Math.ceil(x,y)",
+            b: "highNum = x,y",
+            c: "Math.max(x,y)",
             answer: "C",
-        }
+        },
     ];
 
     //get() to reduce keystrokes.
@@ -122,7 +136,7 @@ $(document).ready(function() {
 
     //function to control timer seconds and messages
     function startTimer() {     
-            seconds = 45;
+            seconds = 60;
             interval = setInterval(function() {
             timerEl.innerHTML = "Seconds remaining: " + seconds;
             seconds--;
