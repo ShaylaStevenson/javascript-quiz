@@ -1,34 +1,48 @@
-div#testEl{
-    border:#5AB029 3px solid;
-    padding:10px 40px 40px 40px;
-    background-color:#E5FCE3;
-    width:50%;
-}
-
-#timerEl {
-    color:red;
-}
-
-#submitAnswerBtn {
-    visibility: hidden;
-    background-color: #5AB029;
-}
-
-#startQuizBtn {
-    visibility: visible;
-    background-color: #5AB029;
+body {
+    background-color:gray;
 }
 
 #resetBtn {
     visibility: hidden;
-    background-color: #5AB029;
-
 }
 
-button {
- margin:8px
+#progressEl {
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(133, 23, 96);
+}
+
+#timerEl {
+    color:rgb(133, 23, 96);
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#submitAnswerBtn {
+    visibility: hidden;
+}
+
+#testEl {
+    border:#f8f4f8 3px solid;
+    padding:10px 40px 40px 40px;
+    background-color:#f0dfeb;
+    width:50%;
+}
+
+#rightOrWrong {
+    font-size: 18px;
+    font-weight: bold;
+    color:darkslategrey;
 }
 
 #scoreboard {
     visibility: hidden;
+}
+
+#scoreDisplay {
+    color: rgb(133, 23, 96);
+}
+
+form h3 {
+    color:darkslategrey;
 }

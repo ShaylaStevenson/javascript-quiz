@@ -1,24 +1,7 @@
-//Setting up the HTML code
-//Set up initial variables in JavaScript code
-//Add questions, answer options, and answer key to the quiz
-//Create the get() function
-//create a function to display time interval countdown:
-//     timer stops game at zero
-//     timer subracts time when wrong answer clicked
-//Create a function to display the questions
-//Create a function to check the answers
-//Create scoreboard to view results, set with users initials and display
-//Get the quiz to load
-
-
-
-
 
 //Function to prevent JS running until DOM loaded fully
 $(document).ready(function() {
     
-    
-
     //variable to contain start quiz button
     var startQuizBtn = get("startQuizBtn");
 
@@ -27,21 +10,22 @@ $(document).ready(function() {
 
     //variable to contain the "test" <div>
     var testEl = get("testEl");
-    testEl.innerHTML = "<h1>JavaScript Quiz</h1>"
 
     var submitAnswerBtn = get("submitAnswerBtn");
+    
 
     //variable to contain the header that displays progress numerically
     var progressEl = get("progressEl");
 
     //variable to display highscores with initials
     var scoreDisplay = get("scoreDisplay");
+    var scoreArray = {};
 
     //variable to contain user's initials
     var userInitials = get("userInitials");
 
     //variable to contain the value of initials to be stored
-    var initialsValue;
+    //var initialsValue;
 
     //variable to contain the submit highscore button
     var getInitialsBtn = get("getInitialsBtn");
@@ -164,7 +148,7 @@ $(document).ready(function() {
         hideStartQuizBtn();
         //if all questions are answered, display message and score and render functions
         if (progress >= possibleQuestions.length) {
-            testEl.innerHTML = "<h2>You answered " + correct + " out of " + possibleQuestions.length + " questions correctly.<h2>";
+            testEl.innerHTML = "<h2>You answered " + correct + " out of " + possibleQuestions.length + "<br>questions correctly.<h2>";
             progressEl.innerHTML = "You have completed the quiz!";
             hideSubmitBtn();
             hideStartQuizBtn();
@@ -203,6 +187,8 @@ $(document).ready(function() {
     //function to check answers
     function checkAnswer() {
         choices = document.getElementsByName("choices");
+        var alertRow = get("rightOrWrong");
+        
         
         //loop through choices and stops at checked choice
         for (var i = 0; i < choices.length; i++) {
@@ -214,61 +200,78 @@ $(document).ready(function() {
         //if correct, increment correct variable
         if (userChoice == possibleQuestions[progress].answer) {
             correct++;
+            alertRow.innerHTML = "Correct!";
         //if false, decremant 5 seconds from timer
         } else {
             seconds -= 5;
+            alertRow.innerHTML = "Wrong!";
+            
         }
+        //alert if answer is right or wrong
+        function flashRow() {
+            alertRow.innerHTML = "";
+        }
+        setTimeout(flashRow, 750);
         //increases progress and displays next question
         progress++;
-        displayQuestion();
+        setTimeout(displayQuestion, 750);
         console.log(correct);
         return correct;
     }
     
-
     //function to calculate score
     function calcScore() {
         var perValue = (correct / possibleQuestions.length)*100;
-        score = perValue.valueOf()
-        scoreDisplay.innerHTML = "\nYour score: " + score + "%"
+        score = perValue.valueOf();
+        scoreDisplay.innerHTML = "\nYour score: " + score + "%";
         scoreboard.style.visibility = "visible";
         console.log(score);
         return score;
     }
     
-
+    //function to save initials with score in localstorage
     function saveScore() {
-        initialsValue = userInitials.value;
+        //store initials and score in array
+        scoreArray = {
+            initials: userInitials.value.trim(),
+            score: score.valueOf(),
+        };
+        localStorage.setItem("scoreArray",JSON.stringify(scoreArray));
+
+        //clear fields and disable btn
+        scoreDisplay.innerHTML = "";
         userInitials.value = "";
         getInitialsBtn.disabled = true;
-        localStorage.setItem("initials",JSON.stringify(initialsValue));
-        localStorage.setItem("score", JSON.stringify(score));
         showHighScores();
-        console.log(initialsValue);
-        return initialsValue;
+        console.log(scoreArray.initials);
+        console.log(scoreArray.score);
+        return;
     }
 
+    //function to get saved scores and display
     function showHighScores() {
-
+        var scoreArrayStorage = JSON.parse(localStorage.getItem("scoreArray"));
+        
+        console.log(scoreArrayStorage);
+        if (scoreArrayStorage !== null) {
+            get("highscoreInitials").innerHTML += scoreArray.initials;
+            get("highscoreScores").innerHTML += scoreArray.score;
+        }
+        else {
+            return;
+        }
     }
     
+    //resets quiz for next user
     function resetQuiz() {
         //scoreboardEl.innerHTML = "";
         window.location.reload();
     }
-
-//when start button clicked, questions and timer will begin  
-startQuizBtn.addEventListener("click", displayQuestion);
-startQuizBtn.addEventListener("click", startTimer);
-startQuizBtn.addEventListener("click", showSubmitBtn);
-resetBtn.addEventListener("click", resetQuiz);
+    
+//event listeners  
+startQuizBtn.addEventListener("click", function(){setTimeout(displayQuestion, 1000)});
+startQuizBtn.addEventListener("click", function(){setTimeout(startTimer, 1000)});
+startQuizBtn.addEventListener("click", function(){setTimeout(showSubmitBtn, 1000)});
+resetBtn.addEventListener("click", function(){setTimeout(resetQuiz, 1000)});
 getInitialsBtn.addEventListener("click", saveScore);
 });
-
-//collect users initials for score board
-//in html create scorebard
-//store scores in an object array, sort array, and display in scoreboard,local storage and json?
-//add restart button
-//add timer that starts onclick of begin button
-//end game when timer = 0
-//deduct time when wrong answer input
