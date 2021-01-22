@@ -1,4 +1,3 @@
-
 //Function to prevent JS running until DOM loaded fully
 $(document).ready(function() {
     
