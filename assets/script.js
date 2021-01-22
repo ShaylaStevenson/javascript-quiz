@@ -18,7 +18,6 @@ $(document).ready(function() {
 
     //variable to display highscores with initials
     var scoreDisplay = get("scoreDisplay");
-    var scoreArray = {};
 
     //variable to contain user's initials
     var userInitials = get("userInitials");
@@ -81,13 +80,6 @@ $(document).ready(function() {
             b: "funFunction()",
             c: "run('funFunction')",
             answer: "B",
-        },
-        {
-            question: "How can you add a comment in a JavaScript file?",
-            a: "//comment",
-            b: "<!--comment-->",
-            c: "/**comment",
-            answer: "A",
         },
         {
             question: "What is the correct way to write a JavaScript array?",
@@ -236,7 +228,7 @@ $(document).ready(function() {
     function calcScore() {
         var perValue = (correct / possibleQuestions.length)*100;
         score = perValue.valueOf();
-        scoreDisplay.innerHTML = "\nYour score: " + score + "%";
+        scoreDisplay.innerHTML = ("\nYour score: " + score + "%");
         scoreboard.style.visibility = "visible";
         console.log(score);
         return score;

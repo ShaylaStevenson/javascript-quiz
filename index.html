@@ -11,8 +11,9 @@
     <title>Quiz</title>
 </head>
 <body>
-    <!--container with page heading and button(s)-->
-    <header class="container">
+<div class="container">
+    <!--page heading and button(s)-->
+    <header>
         <div class="row">
             <div class="col-sm-8">
                 <h1 class="display-3">JavaScript Refresh</h1>
@@ -23,10 +24,8 @@
             </div>
         </div>
     </header>
-
-    <!--container with gameplay-->
-    <main class="container mt-2">
-        <div class="row">
+    <!--main with gameplay-->
+        <main class="row">
             <!--display questions-->
             <span class="col-8" id="testEl"></span>
             <div class="col-sm-4 mt-4">
@@ -43,11 +42,9 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </main>
-
-    <section class="container mt-2">
-        <div class="row">
+        </main>
+    
+        <section class="row">
             <div class="col-sm-8">
                 <!--displays previously hidden "scoreboard"-->
                 <span id="scoreboard">
@@ -63,27 +60,20 @@
                     </form>        
                 </span>
             </div>
-        </div>
-    </section>
+        </section>
     
     <!--show highscores-->
-    <div class="container">
-        <table>
-            <div class="row">
-                <div class="col-2" id="highscoreInitials"></div>
-                   <tr id="studenths2"></tr>
-                <div class="col-2" id="highscoreScores"></div>
-            </div>
-        </table>
-
+        <div>
+            <table>
+                <div class="row">
+                    <div class="col-2" id="highscoreInitials"></div>
+                    <tr id="studenths2"></tr>
+                    <div class="col-2" id="highscoreScores"></div>
+                </div>
+            </table>
+        </div>
 
     </div>
-    
-    
-
-
-    
-
     
 </body>
 </html>
