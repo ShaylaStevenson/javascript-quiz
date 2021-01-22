@@ -45,5 +45,12 @@ body {
 
 form h3 {
     color:darkslategrey;
+    background-color: white;
 }
 
+.scoreElement {
+    color: rgb(133, 23, 96);
+    font-size: 18px;
+    font-weight: bold;
+    background-color:white;
+}

@@ -1,61 +1,33 @@
 //Function to prevent JS running until DOM loaded fully
 $(document).ready(function() {
     
-    //variable to contain start quiz button
     var startQuizBtn = get("startQuizBtn");
-
-    //variable to contain reset button
     var resetBtn = get("resetBtn");
-
-    //variable to contain the "test" <div>
+    //main section to display questions
     var testEl = get("testEl");
-
     var submitAnswerBtn = get("submitAnswerBtn");
-    
-
-    //variable to contain the header that displays progress numerically
+    //header that displays progress numerically
     var progressEl = get("progressEl");
-
-    //variable to display highscores with initials
+    //display highscores with initials
     var scoreDisplay = get("scoreDisplay");
-
-    //variable to contain user's initials
+    //contain user's initials
     var userInitials = get("userInitials");
-
-    //variable to contain the value of initials to be stored
-    //var initialsValue;
-
-    //variable to contain the submit highscore button
+    //submit highscore button
     var getInitialsBtn = get("getInitialsBtn");
-
-    //variable to display the seconds left for quiz
+    //display the seconds left for quiz
     var timerEl = get("timerEl");
-
-    //variable to set how long user has for test
-    //var seconds;
-    
-    //variable containing countdown interval
-    //var interval;
-
-    //variable to record the progress of the quiz ex : Q3 of 4
+    //record the progress of the quiz ex : Q3 of 4
     var progress = 0;
-
-    //variable to record how many correct answers user has
+    //correct answers user has
     var correct = 0;
-
     var score = 0;
-    //var highscores = {initials: initials, score: score};
-
-    //variable to contain a question grabbed from an array
+    //contain a question grabbed from an array
     var question;
-
-    //variable to record the user's selected choice
+    //record the user's selected choice
     var userChoice;
-
-    //variable to contain the possible answers displayed for the user
+    //possible answers displayed for the user
     var choices;
-
-    //variables to contain each possible answer
+    //each possible answer
     var chA, chB, chC;
 
     //Arrays within larger array, where questions with answers are stored
@@ -109,19 +81,10 @@ $(document).ready(function() {
     function hideSubmitBtn() {
         submitAnswerBtn.style.visibility = "hidden";
     }
-    function showStartQuizBtn() {
-        startQuizBtn.style.visibility = "visible";
-    }
     function hideStartQuizBtn() {
         startQuizBtn.style.display = "none";
     }
     function showResetBtn() {
-        resetBtn.style.visibility = "visible";
-    }
-    function hideResetBtn() {
-        resetBtn.style.visibility = "hidden";
-    }
-    function showScoreboard() {
         resetBtn.style.visibility = "visible";
     }
 
@@ -234,6 +197,32 @@ $(document).ready(function() {
         return score;
     }
     
+    //function to save score and ADD to existing array
+    //This function is unfortunately not working. 
+    //What is submitted is unfinished, since it only displays the current users score,
+    //which is saved in local storage
+        // function saveScore() {
+        //     var initials = userInitials.value.trim();
+        //     if ("initial !==") {
+        //         var highscores = JSON.parse(window.localStorage.getItem("userHighscore")) || [];
+        //         var newScore = {
+        //             score: score.valueOf,
+        //             initials: initials,
+        //         };
+        //     userHighscore.push(newScore);
+        //     window.localStorage.setItem("highscores",JSON.stringify(highscores));
+    
+            
+        //     scoreDisplay.innerHTML = "";
+        //     userInitials.value = "";
+        //     getInitialsBtn.disabled = true;
+    
+        //     console.log(highscores.initials);
+        //     console.log(highscores.score);
+        //     get("highscoreInitials").innerHTML += highscores.initials;
+        //     get("highscoreScores").innerHTML += highscores.score;
+        // }
+
     //function to save initials with score in localstorage
     function saveScore() {
         //store initials and score in array
@@ -247,6 +236,7 @@ $(document).ready(function() {
         scoreDisplay.innerHTML = "";
         userInitials.value = "";
         getInitialsBtn.disabled = true;
+
         showHighScores();
         console.log(scoreArray.initials);
         console.log(scoreArray.score);
@@ -256,7 +246,6 @@ $(document).ready(function() {
     //function to get saved scores and display
     function showHighScores() {
         var scoreArrayStorage = JSON.parse(localStorage.getItem("scoreArray"));
-        
         console.log(scoreArrayStorage);
         if (scoreArrayStorage !== null) {
             get("highscoreInitials").innerHTML += scoreArray.initials;
