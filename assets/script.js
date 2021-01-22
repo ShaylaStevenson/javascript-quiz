@@ -1,24 +1,16 @@
 //Function to prevent JS running until DOM loaded fully
 $(document).ready(function() {
-    
+
+    //buttons to start game, reset, submit
     var startQuizBtn = get("startQuizBtn");
     var resetBtn = get("resetBtn");
-    //main section to display questions
-    var testEl = get("testEl");
-    var submitAnswerBtn = get("submitAnswerBtn");
-    //header that displays progress numerically
-    var progressEl = get("progressEl");
-    //display highscores with initials
-    var scoreDisplay = get("scoreDisplay");
-    //contain user's initials
-    var userInitials = get("userInitials");
-    //submit highscore button
     var getInitialsBtn = get("getInitialsBtn");
-    //display the seconds left for quiz
+    var submitAnswerBtn = get("submitAnswerBtn");
+    //componenets of main gameplay
+    var testEl = get("testEl");
+    var progressEl = get("progressEl");
     var timerEl = get("timerEl");
-    //record the progress of the quiz ex : Q3 of 4
     var progress = 0;
-    //correct answers user has
     var correct = 0;
     var score = 0;
     //contain a question grabbed from an array
@@ -29,7 +21,10 @@ $(document).ready(function() {
     var choices;
     //each possible answer
     var chA, chB, chC;
-
+    //componenets related to score storage
+    var scoreDisplay = get("scoreDisplay");
+    var userInitials = get("userInitials");
+    
     //Arrays within larger array, where questions with answers are stored
     var possibleQuestions = [
         {
@@ -152,7 +147,6 @@ $(document).ready(function() {
         choices = document.getElementsByName("choices");
         var alertRow = get("rightOrWrong");
         
-        
         //loop through choices and stops at checked choice
         for (var i = 0; i < choices.length; i++) {
             if (choices[i].checked) {
@@ -168,7 +162,6 @@ $(document).ready(function() {
         } else {
             seconds -= 5;
             alertRow.innerHTML = "Wrong!";
-            
         }
         //alert if answer is right or wrong
         function flashRow() {
@@ -206,23 +199,18 @@ $(document).ready(function() {
         //         };
         //     userHighscore.push(newScore);
         //     window.localStorage.setItem("highscores",JSON.stringify(highscores));
-    
-            
         //     scoreDisplay.innerHTML = "";
         //     userInitials.value = "";
         //     getInitialsBtn.disabled = true;
-    
         //     console.log(highscores.initials);
         //     console.log(highscores.score);
         //     get("highscoreInitials").innerHTML += highscores.initials;
         //     get("highscoreScores").innerHTML += highscores.score;
-        // 
 
-    
 
     //function to save initials with score in localstorage
     function saveScore() {
-        //store initials and score in array
+        //store initial and score in array
         scoreArray = {
             initials: userInitials.value.trim(),
             score: score.valueOf(),
@@ -240,7 +228,7 @@ $(document).ready(function() {
         return;
     }
 
-    //function to get saved scores and display
+    //function to get saved score and display
     function showHighScores() {
         var scoreArrayStorage = JSON.parse(localStorage.getItem("scoreArray"));
         console.log(scoreArrayStorage);
