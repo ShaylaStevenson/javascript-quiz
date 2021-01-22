@@ -104,8 +104,6 @@ $(document).ready(function() {
                 calcScore(); 
                 clearInterval(interval);
                 timerEl.innerHTML = "";
-                //progress = 0;
-                //correct = 0;
             }
         }, 
         1000);
@@ -125,9 +123,6 @@ $(document).ready(function() {
             clearInterval(interval);
             timerEl.innerHTML = "";
             return false;
-             //progress = 0;
-            //correct = 0;
-            //stops function
         }
 
         //displays progress of quiz in progressEl
@@ -221,7 +216,9 @@ $(document).ready(function() {
         //     console.log(highscores.score);
         //     get("highscoreInitials").innerHTML += highscores.initials;
         //     get("highscoreScores").innerHTML += highscores.score;
-        // }
+        // 
+
+    
 
     //function to save initials with score in localstorage
     function saveScore() {
